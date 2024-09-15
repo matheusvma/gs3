@@ -39,7 +39,7 @@ public class SwaggerConfig {
                 "...",
                 "1.0.0",
                 "Terms",
-                new Contact("Matheus Victor Marques Alves", "", "matheusmalves@live.com"),
+                new Contact("Matheus Victor Marques Alves", "", "matheusmalves@yahoo.com.br"),
                 "Apache License",
                 "URL",
                 new ArrayList<VendorExtension>());

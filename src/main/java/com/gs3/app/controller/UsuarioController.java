@@ -81,7 +81,7 @@ public class UsuarioController {
             @ApiResponse(code = 500, message = "Erro na aplicação")
     })
     @PostMapping("/login")
-    public ResponseEntity<String> authenticate(@RequestBody @Valid UsuarioRequest request) {
+    public ResponseEntity<String> authenticate(@RequestBody UsuarioRequest request) {
         boolean isAuthenticated = this.usuarioService.authenticate(request.getUsername(), request.getPassword());
         if (isAuthenticated) {
             return ResponseEntity.status(HttpStatus.OK).body("Login bem-sucedido!");
