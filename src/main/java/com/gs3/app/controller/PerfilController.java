@@ -25,6 +25,7 @@ import java.util.List;
 @Api(tags = "perfis", value = "Controlador Rest API Perfis")
 @EnableSwagger2
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class PerfilController {
 
     @Autowired

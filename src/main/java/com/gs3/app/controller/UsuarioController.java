@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +25,7 @@ import java.util.List;
 @Api(tags = "usuarios", value = "Controlador Rest API Usuarios")
 @EnableSwagger2
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioController {
 
     @Autowired
@@ -81,13 +81,30 @@ public class UsuarioController {
             @ApiResponse(code = 500, message = "Erro na aplicação")
     })
     @PostMapping("/login")
-    public ResponseEntity<String> authenticate(@RequestBody UsuarioRequest request) {
-        boolean isAuthenticated = this.usuarioService.authenticate(request.getUsername(), request.getPassword());
-        if (isAuthenticated) {
-            return ResponseEntity.status(HttpStatus.OK).body("Login bem-sucedido!");
+    public ResponseEntity<UsuarioResponse> authenticate(@RequestBody UsuarioRequest request) {
+        Usuario usuario = this.usuarioService.authenticate(request.getUsername(), request.getPassword());
+        if (usuario != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioMapper.entidadeParaResponse(usuario));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UsuarioResponse());
         }
+    }
+
+    /**
+     * Função responsável por receber uma requisição com o método POST e salvar os dados do usuario.
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "Editar dados usuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Criação"),
+            @ApiResponse(code = 400, message = "Requisição Inválida"),
+            @ApiResponse(code = 500, message = "Erro na aplicação")
+    })
+    @PutMapping("/atualizar/{codigo}")
+    public ResponseEntity<UsuarioResponse> editarUsuario(@PathVariable Integer codigo, @RequestBody @Valid UsuarioRequest request) {
+        Usuario usuario = this.usuarioService.editarUsuario(codigo, usuarioMapper.requestParaEntidade(request));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioMapper.entidadeParaResponse(usuario));
     }
 
 }
