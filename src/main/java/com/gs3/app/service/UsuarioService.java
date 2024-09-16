@@ -1,5 +1,6 @@
 package com.gs3.app.service;
 
+import com.gs3.app.dto.request.EditarUsuarioRequest;
 import com.gs3.app.model.Usuario;
 import com.gs3.app.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
@@ -52,9 +53,8 @@ public class UsuarioService {
      * @param usuario
      * @return
      */
-    public Usuario editarUsuario(Integer codigo, Usuario usuario) {
+    public Usuario editarUsuario(Integer codigo, EditarUsuarioRequest usuario) {
         Usuario usuarioAtualizar = this.usuarioRepository.findById(codigo).get();
-        usuario.setId(codigo);
         BeanUtils.copyProperties(usuario, usuarioAtualizar);
         return this.usuarioRepository.saveAndFlush(usuarioAtualizar);
     }

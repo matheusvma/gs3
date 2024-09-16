@@ -1,5 +1,6 @@
 package com.gs3.app.controller;
 
+import com.gs3.app.dto.request.EditarUsuarioRequest;
 import com.gs3.app.dto.request.UsuarioRequest;
 import com.gs3.app.dto.response.UsuarioResponse;
 import com.gs3.app.mapper.UsuarioMapper;
@@ -102,8 +103,8 @@ public class UsuarioController {
             @ApiResponse(code = 500, message = "Erro na aplicação")
     })
     @PutMapping("/atualizar/{codigo}")
-    public ResponseEntity<UsuarioResponse> editarUsuario(@PathVariable Integer codigo, @RequestBody @Valid UsuarioRequest request) {
-        Usuario usuario = this.usuarioService.editarUsuario(codigo, usuarioMapper.requestParaEntidade(request));
+    public ResponseEntity<UsuarioResponse> editarUsuario(@PathVariable Integer codigo, @RequestBody @Valid EditarUsuarioRequest request) {
+        Usuario usuario = this.usuarioService.editarUsuario(codigo, request);
         return ResponseEntity.status(HttpStatus.OK).body(usuarioMapper.entidadeParaResponse(usuario));
     }
 

@@ -32,4 +32,12 @@ public class PerfilService {
         return this.perfilRepository.findAll();
     }
 
+    /**
+     * Função responsável por buscar todos os perfis cadastrados na base.
+     * @return
+     */
+    public Perfil buscarPerfil(Integer codigo) {
+        return this.perfilRepository.findById(codigo).get();
+    }
+
 }

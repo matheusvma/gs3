@@ -71,4 +71,19 @@ public class PerfilController {
         return ResponseEntity.status(HttpStatus.OK).body(perfilMapper.entidadesParaResponses(perfis));
     }
 
+    /**
+     * Função responsável por receber uma requisição com o método GET e listar perfil por codigo.
+     * @return
+     */
+    @ApiOperation(value = "Buscar perfil")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucesso"),
+            @ApiResponse(code = 500, message = "Erro na aplicação")
+    })
+    @GetMapping("/{codigo}")
+    public ResponseEntity<PerfilResponse> buscarPerfil(@PathVariable Integer codigo) {
+        Perfil perfil = this.perfilService.buscarPerfil(codigo);
+        return ResponseEntity.status(HttpStatus.OK).body(perfilMapper.entidadeParaResponse(perfil));
+    }
+
 }
